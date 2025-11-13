@@ -91,9 +91,7 @@ dotnet run
 
 Calculate an expression
 ```bash
-curl -X POST http://localhost:5250/api/v1/expressions/calculate
--H "Content-Type: application/json"
--d '{"expression": "3+4*6-12"}'
+curl -X POST http://localhost:5250/api/v1/expressions/calculate -H "Content-Type: application/json" -d '{"expression": "3+4*6-12"}'
 ```
 Find expressions by result
 ```bash
