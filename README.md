@@ -80,6 +80,12 @@ dotnet ef database update
 This creates the SQLite database (`ExpressionCalculator.db`) with the required schema.
 If you want to view the DB (in VSCode), install the plugin - SQLite (by alexcvzz)
 Open Command Palette -> Type "SQLite: Open Database" -> Select the ExpressionCalculator.db -> Open SQLite Panel in VSCode -> Righ-click on Epressions Table -> Show Table
+Example:
+| Id | ExpressionString | Result | CreatedAt |
+|----|------------------|--------|---------------------------|
+| 16 | 1+5-3*(5-2)*7 | -57.0 | 2025-11-13 13:43:22.086064 |
+| 17 | 3+4*6 - 12 | 15.0 | 2025-11-13 13:45:07.195573 |
+| 18 | 75-6+1 | 70.0 | 2025-11-13 13:45:15.380134 |
 
 4. Run the Application
 ```bash
