@@ -11,9 +11,11 @@ The **ExpressionEvaluator** solution is designed to safely parse and evaluate st
 
 ## Features
 
-- **Expression Parsing**: Converts string expressions into evaluable format
-- **Mathematical Operations**: Full support for arithmetic operations (+, -, *, /, %, ^)
-- **Error Handling**: Validation and error reporting for invalid expressions
+- **Calculate Mathematical Expressions**: Submit expressions as strings (e.g., `"3+4*6-12"`) and receive computed results
+- **Persistent Storage**: All calculations are automatically saved to a SQLite database
+- **Search by Result**: Find all expressions that produced a specific result
+- **Secure Expression Parsing**: Uses NCalc library to safely evaluate expressions without code injection risks
+- **API Documentation**: Interactive Swagger UI for testing endpoints
 
 ## Usage Examples
 
@@ -45,21 +47,61 @@ var result = expression.Evaluate();
 This component leverages the following NuGet packages:
 
 - **NCalc**: Core expression parsing and evaluation library
+- **Microsoft.EntityFrameworkCore.Sqlite**: SQLite database provider for Entity Framework Core
+- **Microsoft.EntityFrameworkCore.Tools**: CLI tooling for EF Core migrations (`dotnet ef` commands)
+- **Microsoft.EntityFrameworkCore.Design**: Design-time components for EF Core scaffolding and migrations
+- **Swashbuckle.AspNetCore**: OpenAPI/Swagger documentation and UI for ASP.NET Core APIs
 
-Install the dependencies:
-
+## Running the code
+1. Clone the Repository
 ```bash
-dotnet add package NCalc
+git clone https://github.com/yourusername/expression-calculator-api.git
+cd ExpressionEvaluator
 ```
 
+2. Install the dependencies:
+Use
+```bash
+dotnet restore
+```
 
+If you run into any issues, manually install dependencies: 
+```bash
+dotnet add package NCalc
+dotnet add package Microsoft.EntityFrameworkCore.Sqlite
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Swashbuckle.AspNetCore
+```
+3. Run the following command to setup the SQlite DB:
+```bash
+dotnet ef database update
+```
+This creates the SQLite database (`ExpressionCalculator.db`) with the required schema.
+If you want to view the DB (in VSCode), install the plugin - SQLite (by alexcvzz)
+Open Command Palette -> Type "SQLite: Open Database" -> Select the ExpressionCalculator.db -> Open SQLite Panel in VSCode -> Righ-click on Epressions Table -> Show Table
 
-## Security Considerations
+4. Run the Application
+```bash
+dotnet run
+```
 
-- **Sandboxing**: Expressions are evaluated in a sandboxed environment and cannot execute arbitrary code
-- **Whitelist Functions**: Only predefined functions are available; custom code execution is not possible
-- **Parameter Isolation**: Parameters are isolated and cannot access system resources
-- **Input Validation**: All expressions should be validated before evaluation
+### Usage Examples
+## Using cURL
+
+Calculate an expression
+```bash
+curl -X POST http://localhost:5250/api/v1/expressions/calculate
+-H "Content-Type: application/json"
+-d '{"expression": "3+4*6-12"}'
+```
+Find expressions by result
+```bash
+curl http://localhost:5250/api/v1/expressions/by-result/15
+```
+## Using Swagger UI
+
+Navigate to `http://localhost:5250/swagger/index.html` in your browser for an interactive API testing interface.
 
 ## Resources
 
